@@ -1,16 +1,35 @@
 import numpy as np
+import time
+'''
 citys = [
-    [0, 0],   # 城市 0
-    [2, 4],   # 城市 1
-    [3, 1],   # 城市 2
-    [5, 3],   # 城市 3
-    [1, 5],   # 城市 4
-    [4, 0],   # 城市 5
-    [2, 2],   # 城市 6
-    [0, 3],   # 城市 7
-    [5, 5],   # 城市 8
-    [3, 4]    # 城市 9
+    [0, 0],
+    [2, 4],
+    [3, 1],
+    [5, 3],
+    [1, 5],
+    [4, 0], 
+    [2, 2],  
+    [0, 3],  
+    [5, 5],  
+    [3, 4]    
 ]
+'''
+def unique_cities(min_cities, max_cities, coord_range=10):
+    """生成不重複的城市座標"""
+    target_count = np.random.randint(min_cities, max_cities + 1)
+    cities = set()
+    
+    while len(cities) < target_count:
+        new_city = tuple(np.random.randint(0, coord_range, size=2))
+        cities.add(new_city)
+    
+    return [list(city) for city in cities]
+
+np.random.seed(int(time.time()))
+citys = unique_cities(5,15)
+#'''
+print('城市數量:', len(citys))
+print('citys=', citys)
 
 def calculate_distance(city1, city2):
     return ((city1[0] - city2[0])**2 + (city1[1] - city2[1])**2)**0.5

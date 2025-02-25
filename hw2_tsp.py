@@ -1,14 +1,15 @@
 import numpy as np
-
 citys = [
-    [0,0],
-    [0,1],
-    [1,1],
-    [1,0],
-    [0.5,0.5],
-    [0.5,1],
-    [1,0.5],
-    [0,0.5]
+    [0, 0],   # 城市 0
+    [2, 4],   # 城市 1
+    [3, 1],   # 城市 2
+    [5, 3],   # 城市 3
+    [1, 5],   # 城市 4
+    [4, 0],   # 城市 5
+    [2, 2],   # 城市 6
+    [0, 3],   # 城市 7
+    [5, 5],   # 城市 8
+    [3, 4]    # 城市 9
 ]
 
 def calculate_distance(city1, city2):
@@ -24,24 +25,34 @@ def total_distance(path, citys):
 def travel_salesman(citys):
     num_cities = len(citys)
     path = [(i+1)%num_cities for i in range(num_cities)] # path = [1,2,3,4,5,6,7,8,0]
+    distance = total_distance(path, citys)
 
     best_path = path.copy()
-    best_distance = total_distance(best_path, citys)
-    print('frist_path=', best_path, 'frist_distance=', best_distance)
+    best_distance = distance
+    print('frist_path=', path, 'frist_distance=', distance)
 
-    for _ in range(10):
-        for i in range(num_cities - 1):
-            new_path = path.copy()
-            new_path[i], new_path[i+1] = new_path[i+1], new_path[i] # 交換兩個城市的順序,微調路徑
-            new_distance = total_distance(new_path, citys)
+    max = 10000
+    limit = 1000
+    count = 0
 
-            if new_distance < best_distance:
-                best_path = new_path
-                best_distance = new_distance
-                print('best_path=', best_path, 'best_distance=', best_distance)
+    for _ in range(max):
+        neighbor_path = path.copy()
+        i, j = np.random.randint(0, num_cities, 2)  # 隨機交換兩個城市的順序,微調路徑
+        neighbor_path[i], neighbor_path[j] = neighbor_path[j], neighbor_path[i]
+        neighbor_distance = total_distance(neighbor_path, citys)
 
-        np.random.shuffle(path)  # 隨機改變路徑順序
+        if neighbor_distance < best_distance:
+            best_path = neighbor_path
+            best_distance = neighbor_distance
+            count = 0
+            print('path=', best_path, 'distance=', best_distance)
+        else:
+            count += 1
+        
+        if count >= limit:
+            break
 
+    print('best_path=', best_path, 'best_distance=', best_distance)
     return best_path
 
 for i in travel_salesman(citys):

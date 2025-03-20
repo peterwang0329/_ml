@@ -1,6 +1,6 @@
 import numpy as np
 import time
-'''
+#'''
 citys = [
     [0, 0],
     [2, 4],
@@ -27,7 +27,7 @@ def unique_cities(min_cities, max_cities, coord_range=10):
 
 np.random.seed(int(time.time()))
 citys = unique_cities(5,15)
-#'''
+'''
 print('城市數量:', len(citys))
 print('citys=', citys)
 
